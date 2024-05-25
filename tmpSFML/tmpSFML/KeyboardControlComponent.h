@@ -20,22 +20,6 @@ public:
 
     }
 
-    KeyboardControlComponent(std::string upKey, std::string rightKey, std::string downKey, std::string leftKey, std::string shootKey) {
-        this->upKey = GetSDLKeyStringCode(upKey);
-        this->rightKey = GetSDLKeyStringCode(rightKey);
-        this->downKey = GetSDLKeyStringCode(downKey);
-        this->leftKey = GetSDLKeyStringCode(leftKey);
-        this->shootKey = GetSDLKeyStringCode(shootKey);
-    }
-
-    std::string GetSDLKeyStringCode(std::string key) {
-        if (key.compare("up") == 0) return "1073741906";
-        if (key.compare("down") == 0) return "1073741905";
-        if (key.compare("left") == 0) return "1073741904";
-        if (key.compare("right") == 0) return "1073741903";
-        if (key.compare("space") == 0) return "32";
-        return std::to_string(static_cast<int>(key[0]));
-    }
 
     void Initialize() override {
         transform = owner->GetComponent<TransformComponent>();
@@ -43,12 +27,31 @@ public:
     }
 
     void Update(float deltaTime) override {
+        bool changed = false;
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
             transform->position2.x += transform->velocity.x * deltaTime;
+            changed = true;
         }
         else
-        if (Keyboard::isKeyPressed(Keyboard::Down)) {
-   
+        if (Keyboard::isKeyPressed(Keyboard::Left)) {
+            changed = true;
+
+            transform->position2.x -= transform->velocity.x * deltaTime;
+        }
+        else if (Keyboard::isKeyPressed(Keyboard::Down))
+        {
+            changed = true;
+
+            transform->position2.y += transform->velocity.y * deltaTime;
+        }
+        else if (Keyboard::isKeyPressed(Keyboard::Up))
+        {
+            changed = true;
+
+            transform->position2.y -= transform->velocity.y * deltaTime;
+        }
+        if (changed) {
+            Game::instance().view.setCenter(transform->position2);
         }
     }
 };

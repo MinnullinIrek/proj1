@@ -18,6 +18,7 @@ private:
     bool isRunning;
     Game();
 public:
+    sf::View view;
     RenderWindow* window;
 public:
     static Game& instance() {

@@ -5,6 +5,8 @@
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
 #include "KeyboardControlComponent.h"
+#include "SFML/Graphics/View.hpp"
+
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
@@ -24,6 +26,7 @@ bool Game::IsRunning() const {
 
 void Game::Initialize(int width, int height) {
     window = new RenderWindow(VideoMode(width, height), L"Новый проект", Style::Default);
+    view.reset(sf::FloatRect(0, 0, width, height));
 
     window->setVerticalSyncEnabled(true);
     LoadLevel(0);
@@ -55,7 +58,12 @@ void Game::LoadLevel(int levelNumber) {
     //std::string id, Vector2i numFrames, const std::map<std::string, Animation>& animations
     chopperEntity.AddComponent<TransformComponent>(0, 0, 0.1, 0.1, 1152 / 6, 1536 / 8, 1);
     chopperEntity.AddComponent<SpriteComponent>("images/Warrior_Blue.png", Vector2i{6, 8}, std::move(animations), true);
-    chopperEntity.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
+    chopperEntity.AddComponent<KeyboardControlComponent>();
+
+
+
+
+
 
     //Entity& tankEntity(manager.AddEntity("goblin"));
     //tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
@@ -93,6 +101,51 @@ void Game::Update() {
             if (event.type == Event::Closed)
                 window->close();
         }
+    
+#ifdef DEBUG
+
+
+        auto xView = 640;
+        auto yView = 480;
+        float df = 1;
+        float dx = 0, dy = 0;
+        auto rect = view.getTransform();
+        auto center = view.getCenter();
+        if (Keyboard::isKeyPressed(Keyboard::Q)) {
+            view.setSize(view.getSize().x + df, view.getSize().y + df);
+        }
+        else
+        if (Keyboard::isKeyPressed(Keyboard::Z)) {
+            view.setSize(view.getSize().x - df, view.getSize().y - df);
+
+        }
+        else if (Keyboard::isKeyPressed(Keyboard::W))
+        {
+            dy -= df;
+            //center.y -= df;
+        }
+        else if (Keyboard::isKeyPressed(Keyboard::S))
+        {
+            //center.y += df;
+            dy += df;
+        }
+
+        else if (Keyboard::isKeyPressed(Keyboard::A))
+        {
+            //center.x -= df;
+            dx -= df;
+
+        }
+        else if (Keyboard::isKeyPressed(Keyboard::D))
+        {
+            //center.y += df;
+            dx += df;
+
+        }
+
+        view.move(dx, dy);
+#endif // DEBUG
+
         float deltaTime = clock.getElapsedTime().asMilliseconds();//asMicroseconds();
         clock.restart();
         manager.Update(deltaTime);
@@ -104,6 +157,7 @@ void Game::Render() {
     if (manager.HasNoEntities()) {
         return;
     }
+    window->setView(view);
     window->clear(Color::Cyan);
     manager.Render();
     window->display();

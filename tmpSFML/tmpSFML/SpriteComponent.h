@@ -52,10 +52,7 @@ public:
         this->numFrames = numFrames;
         this->animationSpeed = animationSpeed;
         this->isFixed = isFixed;
-
-        
         Play(animations.cbegin()->first);
-
         SetTexture(id);
     }
 
@@ -68,18 +65,15 @@ public:
     }
 
     void SetTexture(std::string assetTextureId) {
-        //texture = Game::assetManager->GetTexture(assetTextureId);
-        texture1.loadFromFile(assetTextureId);//закидываем наше изображение в текстуру
-
+        texture1.loadFromFile(assetTextureId);
     }
 
     void Initialize() override {
         transform = owner->GetComponent<TransformComponent>();
-        //sprite.setTexture(*texture);
         auto w = transform->size.x * transform->scale.x;
         auto h = transform->size.y * transform->scale.y;
-        sprite.setTexture(texture1);//заливаем спрайт текстурой
-        sprite.setTextureRect(IntRect(0, 0, w, h)); //«адаем спрайту один пр€моугольник дл€ вывода одного льва, а не кучи львов сразу. IntRect - приведение типов
+        sprite.setTexture(texture1);
+        sprite.setTextureRect(IntRect(0, 0, w, h));
         sprite.scale(0.5, 0.5);
     }
 

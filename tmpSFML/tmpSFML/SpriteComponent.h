@@ -25,8 +25,8 @@ private:
     Vector2u animationIndex;
     std::string currentAnimation = "left";
     std::map<std::string, Animation> animations;
-    std::string currentAnimationName;
-
+   
+    
     Image image;//сфмл изображение
     Texture texture1;//сфмл текстура
     //Sprite sprite;//сфмл спрайт
@@ -60,7 +60,7 @@ public:
         currentFrame = animations[currentAnimation].numFrames;
         animationIndex = animations[currentAnimation].startFrame;
         animationSpeed = animations[currentAnimation].animationSpeed;
-        currentAnimationName = currentAnimation;
+        this->currentAnimation = currentAnimation;
         currentFrame = 0;
     }
 
@@ -93,7 +93,12 @@ public:
         auto w = transform->size.x * transform->scale.x;
         auto h = transform->size.y * transform->scale.y;
         sprite.setPosition(transform->position2);
-        sprite.setTextureRect(IntRect(w * (int(currentFrame) + startFrame.x), h*startFrame.y, w, h));
+        if (!animation.isReverse) {
+            sprite.setTextureRect(IntRect(w * (int(currentFrame) + startFrame.x), h*startFrame.y, w, h));
+        }
+        else {
+            sprite.setTextureRect(IntRect((w * (int(currentFrame) + startFrame.x)) + w, h * startFrame.y, -w, h));
+        }
         Game::instance().window->draw(sprite);
     }
 };

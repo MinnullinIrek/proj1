@@ -30,7 +30,7 @@ void Game::Initialize(int width, int height) {
 
     window->setVerticalSyncEnabled(true);
     LoadLevel(0);
-
+    
     isRunning = true;
     return;
 }
@@ -45,12 +45,12 @@ void Game::LoadLevel(int levelNumber) {
     //chopperEntity.AddComponent<TransformComponent>(0, 0, 0, 0, 32, 32, 1);
     
     std::map<std::string, Animation> animations;
-    animations[std::string("left")] = Animation(Vector2u{ 0, 2 }, 3, 0.005, true);
+    animations[std::string("left")] = Animation(Vector2u{ 0, 2 }, 3, 0.005, /*isClickled=*/true, /*isReverse=*/true);
     animations[std::string("right")] = Animation(Vector2u{ 0, 2 }, 3, 0.005, true);
     animations[std::string("up")] = Animation(Vector2u{ 0, 6 }, 3, 0.005, true);
     animations[std::string("down")] = Animation(Vector2u{ 0, 4 }, 3, 0.005, true);
     
-    animations[std::string("left_attack")] = Animation(Vector2u{ 3, 2 }, 3, 0.005, true);
+    animations[std::string("left_attack")] = Animation(Vector2u{ 3, 2 }, 3, 0.005, /*isClickled=*/true, /*isReverse=*/true);
     animations[std::string("right_attack")] = Animation(Vector2u{ 3, 2 }, 3, 0.005, true);
     animations[std::string("up_attack")] = Animation(Vector2u{ 3, 6 }, 3, 0.005, true);
     animations[std::string("down_attack")] = Animation(Vector2u{ 3, 4 }, 3, 0.005, true);
@@ -102,7 +102,7 @@ void Game::Update() {
                 window->close();
         }
     
-#ifdef DEBUG
+//#ifdef DEBUG
 
 
         auto xView = 640;
@@ -144,7 +144,7 @@ void Game::Update() {
         }
 
         view.move(dx, dy);
-#endif // DEBUG
+//#endif DEBUG
 
         float deltaTime = clock.getElapsedTime().asMilliseconds();//asMicroseconds();
         clock.restart();

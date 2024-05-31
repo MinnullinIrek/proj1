@@ -16,7 +16,7 @@ public:
     TransformComponent* transform;
     SpriteComponent* sprite;
 
-    KeyboardControlComponent() {
+    KeyboardControlComponent(){
 
     }
 
@@ -30,24 +30,25 @@ public:
         bool changed = false;
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
             transform->position2.x += transform->velocity.x * deltaTime;
+            owner->GetComponent<SpriteComponent>()->Play("right");
             changed = true;
         }
         else
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
             changed = true;
-
+            owner->GetComponent<SpriteComponent>()->Play("left");
             transform->position2.x -= transform->velocity.x * deltaTime;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Down))
         {
             changed = true;
-
+            owner->GetComponent<SpriteComponent>()->Play("down");
             transform->position2.y += transform->velocity.y * deltaTime;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Up))
         {
             changed = true;
-
+            owner->GetComponent<SpriteComponent>()->Play("up");
             transform->position2.y -= transform->velocity.y * deltaTime;
         }
         if (changed) {

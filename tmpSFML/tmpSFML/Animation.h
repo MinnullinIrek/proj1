@@ -11,8 +11,10 @@ public:
     unsigned int numFrames;
     float animationSpeed;
     bool isCickled;
+    bool isReverse = false;
     Animation();
     Animation(Vector2u startFrame, int numFrames, float animationSpeed, bool isCickled = false);
+    Animation(Vector2u startFrame, int numFrames, float animationSpeed, bool isClikled, bool isReverse);
 };
 
 #endif

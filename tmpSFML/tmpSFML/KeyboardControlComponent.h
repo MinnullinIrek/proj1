@@ -16,7 +16,7 @@ public:
     TransformComponent* transform;
     SpriteComponent* sprite;
 
-    KeyboardControlComponent() {
+    KeyboardControlComponent(){
 
     }
 
@@ -29,29 +29,35 @@ public:
     void Update(float deltaTime) override {
         bool changed = false;
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
-            transform->position2.x += transform->velocity.x * deltaTime;
+            //transform->position2.x += transform->velocity.x /** deltaTime*/;
+            sprite->SetPosition(Vector2f(sprite->GetPosition().x + transform->velocity.x, sprite->GetPosition().y));
+            owner->GetComponent<SpriteComponent>()->Play("right");
             changed = true;
         }
         else
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
             changed = true;
+            owner->GetComponent<SpriteComponent>()->Play("left");
+            //transform->position2.x -= transform->velocity.x * deltaTime;
+            sprite->SetPosition(Vector2f(sprite->GetPosition().x - transform->velocity.x, sprite->GetPosition().y));
 
-            transform->position2.x -= transform->velocity.x * deltaTime;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Down))
         {
             changed = true;
-
-            transform->position2.y += transform->velocity.y * deltaTime;
+            owner->GetComponent<SpriteComponent>()->Play("down");
+            //transform->position2.y += transform->velocity.y * deltaTime;
+            sprite->SetPosition(Vector2f(sprite->GetPosition().x, sprite->GetPosition().y + transform->velocity.y));
         }
         else if (Keyboard::isKeyPressed(Keyboard::Up))
         {
             changed = true;
-
-            transform->position2.y -= transform->velocity.y * deltaTime;
+            owner->GetComponent<SpriteComponent>()->Play("up");
+            //transform->position2.y -= transform->velocity.y * deltaTime;
+            sprite->SetPosition(Vector2f(sprite->GetPosition().x, sprite->GetPosition().y - transform->velocity.y));
         }
         if (changed) {
-            Game::instance().view.setCenter(transform->position2);
+            //Game::instance().view.setCenter(sprite->GetPosition()/*transform->position2*/);
         }
     }
 };

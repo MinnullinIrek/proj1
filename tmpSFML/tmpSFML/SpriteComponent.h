@@ -25,8 +25,8 @@ private:
     Vector2u animationIndex;
     std::string currentAnimation = "left";
     std::map<std::string, Animation> animations;
-    std::string currentAnimationName;
-
+   
+    
     Image image;//сфмл изображение
     Texture texture1;//сфмл текстура
     //Sprite sprite;//сфмл спрайт
@@ -54,13 +54,26 @@ public:
         this->isFixed = isFixed;
         Play(animations.cbegin()->first);
         SetTexture(id);
+        SetPosition({0, 0});
+    }
+
+    SpriteComponent(Vector2f pos, std::string id, Vector2i numFrames, std::map<std::string, Animation>&& animations, bool isAnimated) :
+        animations(animations)
+    {
+        this->isAnimated = isAnimated;
+        this->numFrames = numFrames;
+        this->animationSpeed = animationSpeed;
+        this->isFixed = isFixed;
+        Play(animations.cbegin()->first);
+        SetTexture(id);
+        SetPosition(pos);
     }
 
     void Play(const std::string& currentAnimation) {
         currentFrame = animations[currentAnimation].numFrames;
         animationIndex = animations[currentAnimation].startFrame;
         animationSpeed = animations[currentAnimation].animationSpeed;
-        currentAnimationName = currentAnimation;
+        this->currentAnimation = currentAnimation;
         currentFrame = 0;
     }
 
@@ -87,13 +100,26 @@ public:
         }
     }
 
+    Vector2f GetPosition() {
+        return sprite.getPosition();
+    }
+    
+    void SetPosition(Vector2f pos) {
+        sprite.setPosition(pos);
+    }
+
     void Render() override {
         const Animation& animation = animations.at(currentAnimation);
         auto startFrame = animation.startFrame;
         auto w = transform->size.x * transform->scale.x;
         auto h = transform->size.y * transform->scale.y;
-        sprite.setPosition(transform->position2);
-        sprite.setTextureRect(IntRect(w * (int(currentFrame) + startFrame.x), h*startFrame.y, w, h));
+        //sprite.setPosition(transform->position2);
+        if (!animation.isReverse) {
+            sprite.setTextureRect(IntRect(w * (int(currentFrame) + startFrame.x), h*startFrame.y, w, h));
+        }
+        else {
+            sprite.setTextureRect(IntRect((w * (int(currentFrame) + startFrame.x)) + w, h * startFrame.y, -w, h));
+        }
         Game::instance().window->draw(sprite);
     }
 };

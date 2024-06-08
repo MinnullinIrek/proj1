@@ -94,11 +94,16 @@ public:
         if (transform == nullptr) {
             return;
         }
-        auto w = transform->size.x * transform->scale.x;
-        auto h = transform->size.y * transform->scale.y;
+        auto w = transform->size.x;
+        auto h = transform->size.y;
         sprite.setTexture(texture1);
-        sprite.setTextureRect(IntRect(0, 0, w, h));
-        sprite.scale(0.5, 0.5);
+        //sprite.setTextureRect(IntRect(0, 0, w, h));
+        //if (transform->scale.x != 1 && transform->velocity.y != 1) {
+            sprite.scale(w / sprite.getLocalBounds().width, h / sprite.getLocalBounds().height);
+        //}
+        //else {
+          //  sprite.scale(transform->scale);
+        //}
     }
 
     void Update(float deltaTime) override {

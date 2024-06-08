@@ -63,20 +63,20 @@ void Game::LoadLevel(int levelNumber) {
     animations[std::string("down_attack")] = Animation(Vector2u{ 3, 4 }, 3, 0.005, true);
 
     //std::string id, Vector2i numFrames, const std::map<std::string, Animation>& animations
-    chopperEntity.AddComponent<TransformComponent>(320, 320, 0.1, 0.1, 1152 / 6, 1536 / 8, 1);
+    chopperEntity.AddComponent<TransformComponent>(320, 320, 0.1, 0.1, 192, 192, 1);
     chopperEntity.AddComponent<SpriteComponent>("images/Warrior_Blue.png", Vector2i{6, 8}, std::move(animations), true);
     chopperEntity.AddComponent<KeyboardControlComponent>();
 
 
     for (int i = 1;i <= 10;i++) { //create map borders
         
-        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 ), { 64, 64 });
+        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 ), { 200, 200});
         
-        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 * 10 ), {64, 64});
+        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 * 10 ), {200, 200});
 
-        map.loadTileWall("images/06.png", Vector2f( 64, 64 * i ), {64, 64});
+        map.loadTileWall("images/06.png", Vector2f( 64, 64 * i ), {200, 200});
 
-        map.loadTileWall("images/06.png", Vector2f( 64 * 10, 64 * i ), { 64, 64 });
+        map.loadTileWall("images/06.png", Vector2f( 64 * 10, 64 * i ), { 200, 200 });
 
     }
 
@@ -122,7 +122,7 @@ void Game::Update() {
 
         auto xView = 640;
         auto yView = 480;
-        float df = 1;
+        float df = 5;
         float dx = 0, dy = 0;
         auto rect = view.getTransform();
         auto center = view.getCenter();

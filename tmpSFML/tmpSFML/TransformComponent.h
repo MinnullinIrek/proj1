@@ -17,7 +17,7 @@ public:
     Vector2f scale;
 
     TransformComponent(int posX, int posY, float velX, float velY, int w, int h, int s) {
-        position = Vector2f(posX, posY);
+        position2 = Vector2f(posX, posY);
         velocity = Vector2f(velX, velY);
         size = Vector2f( w, h );
         scale = Vector2f( s, s );

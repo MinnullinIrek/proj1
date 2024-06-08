@@ -32,12 +32,14 @@ public:
     //static SDL_Renderer* renderer;
     static AssetManager* assetManager;
     static Event event;
+    EntityManager& getManager();
     void LoadLevel(int levelNumber);
     void Initialize(int width, int height);
     void ProcessInput();
     void Update();
     void Render();
     void Destroy();
+    
 };
 
 #endif

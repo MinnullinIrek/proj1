@@ -17,6 +17,7 @@ private:
 public:
     AssetManager(EntityManager* manager);
     ~AssetManager(){};
+    //EntityManager* getManager() { return manager; };
     void ClearData();
     void AddTexture(std::string textureId, const char* filePath);
     Texture GetTexture(std::string textureId);

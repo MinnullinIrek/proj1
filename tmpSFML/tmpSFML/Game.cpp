@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Header.h"
 #include "Game.h"
+#include "map.h"
 #include "AssetManager.h"
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
@@ -12,12 +13,16 @@ EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
 //SDL_Renderer* Game::renderer;
 Event Game::event;
-
+Map map;
 Game::Game() {
     this->isRunning = false;
 }
 
 Game::~Game() {
+}
+
+EntityManager& Game::getManager() {
+    return manager;
 }
 
 bool Game::IsRunning() const {
@@ -31,6 +36,8 @@ void Game::Initialize(int width, int height) {
     window->setVerticalSyncEnabled(true);
     LoadLevel(0);
     
+    
+
     isRunning = true;
     return;
 }
@@ -39,7 +46,7 @@ void Game::LoadLevel(int levelNumber) {
     /* Start including new assets to the assetmanager list */
     assetManager->AddTexture("hero", "images/Warrior_Blue.png");
     assetManager->AddTexture("goblin", "images/Torch_Red.png");
-
+    
     /* Start including entities and also components to them */
     Entity& chopperEntity(manager.AddEntity("hero"));
     //chopperEntity.AddComponent<TransformComponent>(0, 0, 0, 0, 32, 32, 1);
@@ -56,14 +63,22 @@ void Game::LoadLevel(int levelNumber) {
     animations[std::string("down_attack")] = Animation(Vector2u{ 3, 4 }, 3, 0.005, true);
 
     //std::string id, Vector2i numFrames, const std::map<std::string, Animation>& animations
-    chopperEntity.AddComponent<TransformComponent>(0, 0, 0.1, 0.1, 1152 / 6, 1536 / 8, 1);
+    chopperEntity.AddComponent<TransformComponent>(320, 320, 0.1, 0.1, 1152 / 6, 1536 / 8, 1);
     chopperEntity.AddComponent<SpriteComponent>("images/Warrior_Blue.png", Vector2i{6, 8}, std::move(animations), true);
     chopperEntity.AddComponent<KeyboardControlComponent>();
 
 
+    for (int i = 1;i <= 10;i++) { //create map borders
+        
+        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 ), { 64, 64 });
+        
+        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 * 10 ), {64, 64});
 
+        map.loadTileWall("images/06.png", Vector2f( 64, 64 * i ), {64, 64});
 
+        map.loadTileWall("images/06.png", Vector2f( 64 * 10, 64 * i ), { 64, 64 });
 
+    }
 
     //Entity& tankEntity(manager.AddEntity("goblin"));
     //tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
@@ -149,6 +164,7 @@ void Game::Update() {
         float deltaTime = clock.getElapsedTime().asMilliseconds();//asMicroseconds();
         clock.restart();
         manager.Update(deltaTime);
+        
         Render();
     }
 }
@@ -160,6 +176,7 @@ void Game::Render() {
     window->setView(view);
     window->clear(Color::Cyan);
     manager.Render();
+    map.Render();
     window->display();
 }
 

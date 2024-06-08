@@ -5,7 +5,7 @@
 #include "AssetManager.h"
 #include "Animation.h"
 #include "Header.h"
-
+#include "TransformComponent.h"
 
 #include <SFML/Graphics.hpp>
 using namespace sf;
@@ -39,10 +39,29 @@ public:
         SetTexture(assetTextureId);
     }
 
+    SpriteComponent(std::string assetTextureId, std::map<std::string, Animation>&& animation)
+        : animations(animation)
+    {
+        this->isAnimated = true;
+        this->isFixed = false;
+        SetTexture(assetTextureId);
+    }
+
     SpriteComponent(std::string assetTextureId, bool isFixed) {
         this->isAnimated = false;
         this->isFixed = isFixed;
         SetTexture(assetTextureId);
+    }
+
+    SpriteComponent(std::string assetTextureId, Vector2f pos, Vector2i size, std::map<std::string, Animation>&& animation):
+        animations(animation) //for floor
+    { 
+        this->isAnimated = true;
+        this->isFixed = false;
+        SetTexture(assetTextureId);
+        
+        sprite.setTextureRect(IntRect(Vector2i(pos), size));
+        sprite.setPosition(pos);
     }
 
     SpriteComponent(std::string id, Vector2i numFrames, std::map<std::string, Animation>&& animations, bool isAnimated) :
@@ -57,6 +76,8 @@ public:
     }
 
     void Play(const std::string& currentAnimation) {
+        if (this->isAnimated == false)
+            return;
         currentFrame = animations[currentAnimation].numFrames;
         animationIndex = animations[currentAnimation].startFrame;
         animationSpeed = animations[currentAnimation].animationSpeed;
@@ -70,6 +91,9 @@ public:
 
     void Initialize() override {
         transform = owner->GetComponent<TransformComponent>();
+        if (transform == nullptr) {
+            return;
+        }
         auto w = transform->size.x * transform->scale.x;
         auto h = transform->size.y * transform->scale.y;
         sprite.setTexture(texture1);
@@ -88,16 +112,18 @@ public:
     }
 
     void Render() override {
-        const Animation& animation = animations.at(currentAnimation);
-        auto startFrame = animation.startFrame;
-        auto w = transform->size.x * transform->scale.x;
-        auto h = transform->size.y * transform->scale.y;
-        sprite.setPosition(transform->position2);
-        if (!animation.isReverse) {
-            sprite.setTextureRect(IntRect(w * (int(currentFrame) + startFrame.x), h*startFrame.y, w, h));
-        }
-        else {
-            sprite.setTextureRect(IntRect((w * (int(currentFrame) + startFrame.x)) + w, h * startFrame.y, -w, h));
+        if (this->isAnimated == true) {
+            const Animation& animation = animations.at(currentAnimation);
+            auto startFrame = animation.startFrame;
+            auto w = transform->size.x * transform->scale.x;
+            auto h = transform->size.y * transform->scale.y;
+            sprite.setPosition(transform->position2);
+            if (!animation.isReverse) {
+                sprite.setTextureRect(IntRect(w * (int(currentFrame) + startFrame.x), h * startFrame.y, w, h));
+            }
+            else {
+                sprite.setTextureRect(IntRect((w * (int(currentFrame) + startFrame.x)) + w, h * startFrame.y, -w, h));
+            }
         }
         Game::instance().window->draw(sprite);
     }

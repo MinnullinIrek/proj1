@@ -20,6 +20,7 @@ public:
     std::string name;
     Entity(EntityManager& manager);
     Entity(EntityManager& manager, std::string name);
+    Entity(std::string name); // for wall
     void Update(float deltaTime);
     void Render();
     void Destroy();

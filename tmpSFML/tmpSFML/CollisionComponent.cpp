@@ -72,7 +72,7 @@ bool CollisionComponent::checkCollision(float changePos) {
 void CollisionComponent::updateCoord() {
 	if (transform == nullptr) 
 		return;
-	
+	//m_rect = sf::FloatRect(left, top, width, height);
 	width = Vector2f(transform->position.x, transform->position.x + transform->size.x);
 	heigth = Vector2f(transform->position.y, transform->position.y + transform->size.y);
 }
@@ -83,4 +83,44 @@ Vector2f CollisionComponent::getWidth() {
 
 Vector2f CollisionComponent::getHeigth() {
 	return heigth;
+}
+
+sf::FloatRect CollisionComponent::getRect()
+{
+	return m_rect;
+}
+
+
+void CollisionComponent::checkCollisions() {
+	checkWallCollision();
+	checkUnitCollision();
+}
+
+void CollisionComponent::checkWallCollision() {
+	std::vector<Entity*> collidedWalls;
+
+	auto& walls = Game::instance().getMap().getWalls();
+	for (const auto& wall : walls) {
+		auto wallRect = wall->getComponent<CollisionComponent>()->getRect();
+
+		if (m_rect.intersects(wallRect)) {
+			collidedWalls.push_back(wall);
+		}
+	}
+	wallsCollision(collidedWalls);
+
+}
+
+void CollisionComponent::checkUnitCollision() {
+	//можно пока оставить
+}
+
+void CollisionComponent::wallsCollision(const std::vector<Entity*>& walls) {
+
+
+
+}
+
+void CollisionComponent::unitsCollision(const std::vector<Entity*>& units) {
+
 }

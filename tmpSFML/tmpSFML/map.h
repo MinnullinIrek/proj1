@@ -59,7 +59,7 @@ public:
 private:
 	Vector2i m_size;
 	int entity_count = 0;
-	std::vector<Entity> m_tiles;
+	std::vector<Entity> m_walls;
 	
 };
 

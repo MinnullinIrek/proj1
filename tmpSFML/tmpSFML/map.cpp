@@ -16,19 +16,19 @@ Map::Map() {
 /**/
 
 std::vector<Entity> Map::getEntities() {
-	return m_tiles;
+	return m_walls;
 }
 
 void Map::loadTileWall(const char* id, const Vector2f& cord, const Vector2i& size) {
-	m_tiles.push_back(Entity(Game::instance().getManager().AddEntity("wall" + std::to_string(entity_count))));
+	m_walls.push_back(Entity(Game::instance().getManager().AddEntity("wall" + std::to_string(entity_count))));
 	
-	m_tiles[entity_count].AddComponent<TransformComponent>(cord.x, cord.y, 0, 0, size.x, size.y, 1);
-	m_tiles[entity_count].AddComponent<TileComponent>(std::string(id), cord, size);
-	m_tiles[entity_count].AddComponent<CollisionComponent>(false);
+	m_walls[entity_count].AddComponent<TransformComponent>(cord.x, cord.y, 0, 0, size.x, size.y, 1);
+	m_walls[entity_count].AddComponent<TileComponent>(std::string(id), cord, size);
+	m_walls[entity_count].AddComponent<CollisionComponent>(false);
 	/*Game::instance().getManager().getEntity("wall" + std::to_string(entity_count)).AddComponent<TransformComponent>(cord.x, cord.y, 0, 0, size.x, size.y, 1);
 	Game::instance().getManager().getEntity("wall" + std::to_string(entity_count)).AddComponent<SpriteComponent>(std::string(id), std::move(animations));
 	Game::instance().getManager().getEntity("wall" + std::to_string(entity_count)).AddComponent<CollisionComponent>(false);
-	*///m_tiles[entity_count].GetComponent<SpriteComponent>()->Play("wall");
+	*///m_walls[entity_count].GetComponent<SpriteComponent>()->Play("wall");
 	
 	entity_count++;
 
@@ -36,7 +36,7 @@ void Map::loadTileWall(const char* id, const Vector2f& cord, const Vector2i& siz
 
 
 void Map::Render() {
-	for (auto& tile : m_tiles) {
+	for (auto& tile : m_walls) {
 		tile.Render();
 	}
 }

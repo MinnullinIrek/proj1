@@ -22,14 +22,25 @@ public:
 	~CollisionComponent() {};
 
 	bool checkCollision(float changePos) ;
+
+	void checkCollisions();
+	void checkWallCollision();
+	void checkUnitCollision();
+
+	void wallsCollision(const std::vector<Entity*>& walls);
+	void unitsCollision(const std::vector<Entity*>& units);
+
+
 	void Update(float deltaTime)  override {};
 	void Initialize() override;
 	Vector2f getWidth();
 	Vector2f getHeigth();
 
+	sf::FloatRect getRect();
 private:
 	void updateCoord();
 
+	sf::FloatRect m_rect;
 	Vector2f heigth; //высота
 	Vector2f width; //ширина
 	TransformComponent* transform;

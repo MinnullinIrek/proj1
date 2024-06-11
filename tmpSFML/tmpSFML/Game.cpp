@@ -7,7 +7,7 @@
 #include "SpriteComponent.h"
 #include "KeyboardControlComponent.h"
 #include "SFML/Graphics/View.hpp"
-
+#include "CollisionComponent.h"
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
@@ -23,6 +23,10 @@ Game::~Game() {
 
 EntityManager& Game::getManager() {
     return manager;
+}
+
+Map& Game::getMap() {
+    return map;
 }
 
 bool Game::IsRunning() const {
@@ -66,20 +70,20 @@ void Game::LoadLevel(int levelNumber) {
     chopperEntity.AddComponent<TransformComponent>(320, 320, 0.1, 0.1, 192, 192, 1);
     chopperEntity.AddComponent<SpriteComponent>("images/Warrior_Blue.png", Vector2i{6, 8}, std::move(animations), true);
     chopperEntity.AddComponent<KeyboardControlComponent>();
+    chopperEntity.AddComponent<CollisionComponent>(true);
 
+    //for (int i = 1;i <= 10;i++) { //create map borders
+    //    
+    //    map.loadTileWall("images/06.png", Vector2f( i * 64, 64 ), { 200, 200});
+    //    
+    //    map.loadTileWall("images/06.png", Vector2f( i * 64, 64 * 10 ), {200, 200});
 
-    for (int i = 1;i <= 10;i++) { //create map borders
-        
-        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 ), { 200, 200});
-        
-        map.loadTileWall("images/06.png", Vector2f( i * 64, 64 * 10 ), {200, 200});
+    //    map.loadTileWall("images/06.png", Vector2f( 64, 64 * i ), {200, 200});
 
-        map.loadTileWall("images/06.png", Vector2f( 64, 64 * i ), {200, 200});
-
-        map.loadTileWall("images/06.png", Vector2f( 64 * 10, 64 * i ), { 200, 200 });
-
-    }
-
+    //    map.loadTileWall("images/06.png", Vector2f( 64 * 10, 64 * i ), { 200, 200 });
+    //    
+    //}
+    map.loadTileWall("images/06.png", Vector2f(250, 250), Vector2i(64, 64));
     //Entity& tankEntity(manager.AddEntity("goblin"));
     //tankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
     //tankEntity.AddComponent<SpriteComponent>("tank-image");

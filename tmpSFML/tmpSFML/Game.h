@@ -8,9 +8,10 @@ using namespace sf;
 #include "./Entity.h"
 #include "./Component.h"
 #include "./EntityManager.h"
+//#include "./map"
 
 class AssetManager;
-
+class Map;
 class Game {
 private:
     Clock clock;
@@ -33,6 +34,7 @@ public:
     static AssetManager* assetManager;
     static Event event;
     EntityManager& getManager();
+    Map& getMap();
     void LoadLevel(int levelNumber);
     void Initialize(int width, int height);
     void ProcessInput();

@@ -85,6 +85,11 @@ public:
         currentFrame = 0;
     }
 
+    std::string getDirection() { 
+    //for Collision to define direction, that will be used to check future position
+        return currentAnimation;
+    }
+
     void SetTexture(std::string assetTextureId) {
         texture1.loadFromFile(assetTextureId);
     }

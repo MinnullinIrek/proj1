@@ -10,7 +10,7 @@
 #include "CollisionComponent.h"
 
 EntityManager manager;
-AssetManager* Game::assetManager = new AssetManager(&manager);
+//AssetManager* Game::assetManager = new AssetManager(&manager);
 //SDL_Renderer* Game::renderer;
 Event Game::event;
 Map map;
@@ -48,8 +48,8 @@ void Game::Initialize(int width, int height) {
 
 void Game::LoadLevel(int levelNumber) {
     /* Start including new assets to the assetmanager list */
-    assetManager->AddTexture("hero", "images/Warrior_Blue.png");
-    assetManager->AddTexture("goblin", "images/Torch_Red.png");
+    //assetManager->AddTexture("hero", "images/Warrior_Blue.png");
+    //assetManager->AddTexture("goblin", "images/Torch_Red.png");
     
     /* Start including entities and also components to them */
     Entity& chopperEntity(manager.AddEntity("hero"));

@@ -40,15 +40,15 @@ const int WIDTH_MAP = 40;//размер карты ширина
 //"0000000000000000000000000000000000000000",
 //};
 
-class Map
+class Map 
 {
 public:
 	Map();
 	Map(String map);
 	~Map() {};
-	void Update();
+	void Update(float dt);
 	void Render();
-	void loadTileWall(const char* id, Vector2f cord, Vector2i size);
+	void loadTileWall(const char* id, const Vector2f& cord, const Vector2i& size);
 	void loadTileFloor(const char* id, Vector2f cord, Vector2i size);
 	void loadMap();
 	void loadMapFromStr(String map);

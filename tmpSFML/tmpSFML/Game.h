@@ -9,6 +9,8 @@ using namespace sf;
 #include "./Component.h"
 #include "./EntityManager.h"
 //#include "./map"
+#include "TextureManager.h"
+
 
 class AssetManager;
 class Map;
@@ -21,6 +23,7 @@ private:
 public:
     sf::View view;
     RenderWindow* window;
+    TextureManager textureManager;
 public:
     static Game& instance() {
         static Game game;
@@ -31,7 +34,7 @@ public:
     int ticksLastFrame = 0;
     bool IsRunning() const;
     //static SDL_Renderer* renderer;
-    static AssetManager* assetManager;
+    //static AssetManager* assetManager;
     static Event event;
     EntityManager& getManager();
     Map& getMap();

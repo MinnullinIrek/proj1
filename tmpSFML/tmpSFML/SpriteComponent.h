@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "Header.h"
 #include "TransformComponent.h"
+#include "Game.h"
 
 #include <SFML/Graphics.hpp>
 using namespace sf;
@@ -28,7 +29,7 @@ private:
    
     
     Image image;//сфмл изображение
-    Texture texture1;//сфмл текстура
+    Texture *texture1;//сфмл текстура
     //Sprite sprite;//сфмл спрайт
 
 
@@ -90,8 +91,11 @@ public:
         return currentAnimation;
     }
 
-    void SetTexture(std::string assetTextureId) {
-        texture1.loadFromFile(assetTextureId);
+    void SetTexture(const std::string& assetTextureId) {
+        //texture1.loadFromFile(assetTextureId);
+        //Game::instance().assetManager->AddTexture
+        texture1 = Game::instance().textureManager.LoadTexture(assetTextureId);
+
     }
 
     void Initialize() override {
@@ -101,7 +105,7 @@ public:
         }
         auto w = transform->size.x;
         auto h = transform->size.y;
-        sprite.setTexture(texture1);
+        sprite.setTexture(*texture1);
         //sprite.setTextureRect(IntRect(0, 0, w, h));
         //if (transform->scale.x != 1 && transform->velocity.y != 1) {
             sprite.scale(w / sprite.getLocalBounds().width, h / sprite.getLocalBounds().height);

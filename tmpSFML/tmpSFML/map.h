@@ -53,7 +53,7 @@ public:
 	void loadMap();
 	void loadMapFromStr(String map);
 	
-	std::vector<Entity> getEntities();
+
 	Vector2i getSize();
 	Entity* getTile(Vector2f cord);
 private:

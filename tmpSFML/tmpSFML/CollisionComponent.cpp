@@ -73,8 +73,8 @@ void CollisionComponent::updateCoord() {
 	if (transform == nullptr) 
 		return;
 	
-	width = Vector2f(transform->position2.x, transform->position2.x + transform->size.x);
-	heigth = Vector2f(transform->position2.y, transform->position2.y + transform->size.y);
+	width = Vector2f(transform->position.x, transform->position.x + transform->size.x);
+	heigth = Vector2f(transform->position.y, transform->position.y + transform->size.y);
 }
 
 Vector2f CollisionComponent::getWidth() {

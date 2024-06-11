@@ -115,7 +115,7 @@ public:
             auto startFrame = animation.startFrame;
             auto w = transform->size.x * transform->scale.x;
             auto h = transform->size.y * transform->scale.y;
-            sprite.setPosition(transform->position2);
+            sprite.setPosition(transform->position);
             if (!animation.isReverse) {
                 sprite.setTextureRect(IntRect(w * (int(currentFrame) + startFrame.x), h * startFrame.y, w, h));
             }

@@ -34,7 +34,7 @@ public:
             owner->GetComponent<SpriteComponent>()->Play("right");
             float changePos = transform->velocity.x * deltaTime;
             if(owner->GetComponent<CollisionComponent>()->checkCollision(changePos))
-                transform->position2.x += changePos;
+                transform->position.x += changePos;
         }
         else
         if (Keyboard::isKeyPressed(Keyboard::Left)) {
@@ -42,7 +42,7 @@ public:
             owner->GetComponent<SpriteComponent>()->Play("left");
             float changePos = transform->velocity.x * deltaTime;
             if (owner->GetComponent<CollisionComponent>()->checkCollision(changePos))
-                transform->position2.x -= changePos;
+                transform->position.x -= changePos;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Down))
         {
@@ -50,7 +50,7 @@ public:
             owner->GetComponent<SpriteComponent>()->Play("down");
             float changePos = transform->velocity.y * deltaTime;
             if (owner->GetComponent<CollisionComponent>()->checkCollision(changePos))
-                transform->position2.y += changePos;
+                transform->position.y += changePos;
         }
         else if (Keyboard::isKeyPressed(Keyboard::Up))
         {
@@ -58,10 +58,10 @@ public:
             owner->GetComponent<SpriteComponent>()->Play("up");
             float changePos = transform->velocity.y * deltaTime;
             if (owner->GetComponent<CollisionComponent>()->checkCollision(changePos))
-                transform->position2.y -= changePos;
+                transform->position.y -= changePos;
         }
         if (changed) {
-            Game::instance().view.setCenter(transform->position2);
+            Game::instance().view.setCenter(transform->position);
         }
     }
 };

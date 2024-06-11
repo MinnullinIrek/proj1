@@ -97,17 +97,17 @@ void CollisionComponent::checkCollisions() {
 }
 
 void CollisionComponent::checkWallCollision() {
-	std::vector<Entity*> collidedWalls;
+	//std::vector<Entity*> collidedWalls;
 
-	auto& walls = Game::instance().getMap().getWalls();
-	for (const auto& wall : walls) {
-		auto wallRect = wall->getComponent<CollisionComponent>()->getRect();
+	//auto& walls = Game::instance().getMap().getWalls();
+	//for (const auto& wall : walls) {
+	//	auto wallRect = wall->getComponent<CollisionComponent>()->getRect();
 
-		if (m_rect.intersects(wallRect)) {
-			collidedWalls.push_back(wall);
-		}
-	}
-	wallsCollision(collidedWalls);
+	//	if (m_rect.intersects(wallRect)) {
+	//		collidedWalls.push_back(wall);
+	//	}
+	//}
+	//wallsCollision(collidedWalls);
 
 }
 

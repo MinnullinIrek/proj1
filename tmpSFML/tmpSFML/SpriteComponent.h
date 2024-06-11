@@ -22,21 +22,14 @@ private:
     Vector2i numFrames;
     float currentFrame;
     int animationSpeed;
-    bool isFixed;
     Vector2u animationIndex;
     std::string currentAnimation = "left";
     std::map<std::string, Animation> animations;
-   
-    
-    Image image;//сфмл изображение
-    Texture *texture1;//сфмл текстура
-    //Sprite sprite;//сфмл спрайт
 
 
 public:
     SpriteComponent(std::string assetTextureId) {
         this->isAnimated = true;
-        this->isFixed = false;
         SetTexture(assetTextureId);
     }
 
@@ -44,13 +37,6 @@ public:
         : animations(animation)
     {
         this->isAnimated = true;
-        this->isFixed = false;
-        SetTexture(assetTextureId);
-    }
-
-    SpriteComponent(std::string assetTextureId, bool isFixed) {
-        this->isAnimated = false;
-        this->isFixed = isFixed;
         SetTexture(assetTextureId);
     }
 
@@ -58,7 +44,6 @@ public:
         animations(animation) //for floor
     { 
         this->isAnimated = true;
-        this->isFixed = false;
         SetTexture(assetTextureId);
         
         sprite.setTextureRect(IntRect(Vector2i(pos), size));
@@ -71,7 +56,6 @@ public:
         this->isAnimated = isAnimated;
         this->numFrames = numFrames;
         this->animationSpeed = animationSpeed;
-        this->isFixed = isFixed;
         Play(animations.cbegin()->first);
         SetTexture(id);
     }
@@ -94,8 +78,8 @@ public:
     void SetTexture(const std::string& assetTextureId) {
         //texture1.loadFromFile(assetTextureId);
         //Game::instance().assetManager->AddTexture
-        texture1 = Game::instance().textureManager.LoadTexture(assetTextureId);
-
+        sf::Texture* texture = Game::instance().textureManager.LoadTexture(assetTextureId);
+        sprite.setTexture(*texture);
     }
 
     void Initialize() override {
@@ -105,7 +89,7 @@ public:
         }
         auto w = transform->size.x;
         auto h = transform->size.y;
-        sprite.setTexture(*texture1);
+        //sprite.setTexture(*texture1);
         //sprite.setTextureRect(IntRect(0, 0, w, h));
         //if (transform->scale.x != 1 && transform->velocity.y != 1) {
             sprite.scale(w / sprite.getLocalBounds().width, h / sprite.getLocalBounds().height);

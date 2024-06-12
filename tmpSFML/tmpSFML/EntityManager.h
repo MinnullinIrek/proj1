@@ -19,6 +19,7 @@ public:
     unsigned int GetEntityCount() const;
     void ListAllEntities() const;
     std::vector<Entity*> GetEntities() const;
+    Entity& getEntity(std::string name);
     Entity& AddEntity(std::string entityName);
 };
 

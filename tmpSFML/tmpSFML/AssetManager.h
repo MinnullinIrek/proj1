@@ -10,16 +10,17 @@
 using namespace sf;
 
 
-class AssetManager {
-private:
-    EntityManager* manager;
-    std::map<std::string, Texture> textures;
-public:
-    AssetManager(EntityManager* manager);
-    ~AssetManager(){};
-    void ClearData();
-    void AddTexture(std::string textureId, const char* filePath);
-    Texture GetTexture(std::string textureId);
-};
+//class AssetManager {
+//private:
+//    EntityManager* manager;
+//    std::map<std::string, Texture> textures;
+//public:
+//    AssetManager(EntityManager* manager);
+//    ~AssetManager(){};
+//    //EntityManager* getManager() { return manager; };
+//    void ClearData();
+//    void AddTexture(std::string textureId, const char* filePath);
+//    Texture GetTexture(std::string textureId);
+//};
 
 #endif

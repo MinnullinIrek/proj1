@@ -45,3 +45,12 @@ Entity& EntityManager::AddEntity(std::string entityName) {
     entities.emplace_back(entity);
     return *entity;
 }
+
+Entity& EntityManager::getEntity(std::string name) {
+    for (auto& Entity : entities) {
+        if (Entity->name == name) {
+            return *Entity;
+        }
+    }
+    return *entities[0];
+}

@@ -9,9 +9,9 @@
 
 class TransformComponent : public Component {
 public:
-    Vector2f position2 = {0,0};
+    //Vector2f position2 = {0,0};
 
-    Vector2f position;
+    Vector2f position = {0,0};
     Vector2f velocity;
     Vector2f size;
     Vector2f scale;
@@ -28,8 +28,8 @@ public:
     }
 
     void Update(float deltaTime) override {
-        position.x += velocity.x * deltaTime;
-        position.y += velocity.y * deltaTime;
+        //position.x += velocity.x * deltaTime;
+        //position.y += velocity.y * deltaTime;
     }
 };
 
